@@ -3,11 +3,13 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 class SearchTests(unittest.TestCase):
-    def setUp(self):
-        self.driver = webdriver.Chrome()
-        self.driver.implicitly_wait(30)
-        self.driver.maximize_window()
-        self.driver.get("https://www.jd.com/")
+    @classmethod
+    def setUpClass(cls):
+        cls.driver = webdriver.Chrome()
+        cls.driver.implicitly_wait(30)
+        cls.driver.maximize_window()
+        cls.driver.get("https://www.jd.com/")
+        cls.driver.title
 
     def test_search_by_category(self):
         # get the search textbox
@@ -29,8 +31,9 @@ class SearchTests(unittest.TestCase):
         products = self.driver.find_elements_by_xpath('//*[@id="J_goodsList"]/ul/li[1]/div/div[3]/a/em')
         self.assertEqual(1, len(products))
 
-    def tearDown(self):
-        self.driver.quit()
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
